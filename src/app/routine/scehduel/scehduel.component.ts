@@ -32,8 +32,10 @@ export class ScehduelComponent implements OnInit {
 
   onSubmit() {
     this.loading=true
+    console.log(this.service.form.value)
     this.service.adddetail(this.service.form.value).subscribe(res => {
       this.data = res;
+      console.log(res)
       alert(`data added successfully !`)
       error => {
         this.loading=false

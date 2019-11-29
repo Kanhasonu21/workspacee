@@ -41,10 +41,6 @@ export class HomeComponent implements OnInit {
     this.codes = this.countryList.find(con => con.name == count).codes;
   }
 
-  logout(){
-    this._HomeService.logout();
-  }
-
   save() {
     console.log('user data', this.registerForm.value)
     this._HomeService.registeration(this.registerForm.value).subscribe(data => console.log(data),

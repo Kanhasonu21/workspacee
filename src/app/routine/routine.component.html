@@ -1,17 +1,17 @@
-<button mat-raised-button (click)="onCreate()">
-    <mat-icon>add</mat-icon>Create
+<button mat-raised-button (click)="onCreate()" style="background-color: #17a2b8; color:white">
+    <mat-icon>add</mat-icon>ADD DATA
 </button>
 <div class="container">
     <tbody>
         <tr>
-            <td style="width: 500px;  border: 1px solid black;">
+            <td style="width: 500px;  border: 2px solid#17a2b8!important; color: #17a2b8;">
                 <angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems1"
                     (onSelect)="onItemSelect1($event)" (onDeSelect)="OnItemDeSelect2($event)"
                     (onSelectAll)="onSelectAll1($event)" (onDeSelectAll)="onDeSelectAll2($event)"
                     [settings]="dropdownSettings1">
                 </angular2-multiselect>
             </td>&nbsp;
-            <td style="width: 500px;  border: 1px solid black;">
+            <td style="width: 500px;  border: 2px solid#17a2b8!important; color: #17a2b8;">
                 <angular2-multiselect  [data]="dropdownList2" [(ngModel)]="selectedItems2" [settings]="dropdownSettings2"
                     (onSelect)="onItemSelect1($event)" (onDeSelect)="OnItemDeSelect2($event)"
                     (onSelectAll)="onSelectAll1($event)" (onDeSelectAll)="onDeSelectAll2($event)"
@@ -20,7 +20,7 @@
             </td>
         </tr>
     </tbody>
-</div>
+</div><br>
 
 <div class="card-footer">
   
@@ -58,10 +58,10 @@
             <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef>actions</mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                    <button mat-button color="primary" mat-icon-button (click)="onEdit(row)">
+                    <button mat-button color="primary" mat-icon-button (click)="onEdit(row)"  matTooltip="Edit">
                         <mat-icon>edit</mat-icon>
                     </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button mat-icon-button color="warn" (click)="delete(row)">
+                    <button mat-icon-button color="warn" matTooltip="DELETE ROW" (click)="delete(row)">
                         <mat-icon>delete_outline</mat-icon>
                     </button>
                 </mat-cell>

@@ -26,8 +26,8 @@ export class HomeService {
   //get list of match detail ---
   _url3 = "http://192.168.96.222:8080/fetch/allmatchdata?pageNumber=4";
   registrationUrl = " http://192.168.96.222:8080/register"
-  constructor(private http: HttpClient) { }
-  private handleError(errorResponse: HttpErrorResponse) {
+  constructor(public http: HttpClient) { }
+  public handleError(errorResponse: HttpErrorResponse) {
 
     if (errorResponse.error instanceof ErrorEvent) {
       alert(`Client Side Error ${errorResponse.error.message}`);
@@ -99,12 +99,7 @@ export class HomeService {
     return !!sessionStorage.getItem('token')
   }
 
-  logout() {
-    if (sessionStorage.getItem('token')) {
-      sessionStorage.removeItem("token")
-    }
 
-  }
   postFile(fileToUpload: File) {
 
     const endpoint = `http://192.168.96.222:8080/uploadFile`;

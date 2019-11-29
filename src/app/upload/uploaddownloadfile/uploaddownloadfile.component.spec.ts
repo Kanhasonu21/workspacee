@@ -18,7 +18,6 @@ describe('Login Component', () => {
             imports: [
                 HttpClientTestingModule,
                 RouterTestingModule
-
             ],
             declarations: [
                 UploaddownloadfileComponent
@@ -29,31 +28,23 @@ describe('Login Component', () => {
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(UploaddownloadfileComponent);
-
-            
-            
             homeservice = TestBed.get(HomeService);
             component = fixture.componentInstance;
-
             fixture.detectChanges();
         })
-
     }));
 
-    
+
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
-    it('should handle upload file activity', async(() => {
-        var app = component.homeService;
+    // it('should handle upload file activity', async(() => {
+    //     var app = component.homeService;
+    //     spyOn(app, 'downloadFile');
+    //     expect(app.downloadFile).toHaveBeenCalled()
+    // }))
 
-        spyOn(app, 'downloadFile');
-
-        expect(app.downloadFile).toHaveBeenCalled()
-
-    }))
-   
 
 
 

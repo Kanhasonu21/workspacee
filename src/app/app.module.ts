@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { map } from 'rxjs/operators';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ListComponent } from './list/list.component'; 
@@ -30,11 +29,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IntercepterService } from './intercepter.service';
 import { UploaddownloadfileComponent } from './upload/uploaddownloadfile/uploaddownloadfile.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import {MatCardModule} from '@angular/material/card';
 import { SignupComponent } from './signup/signup.component';
-import { LoginComponent } from './login/login.component'
-import { ClarityModule } from '@clr/angular';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,11 +44,13 @@ import { ClarityModule } from '@clr/angular';
     UploaddownloadfileComponent,
     NavBarComponent,
     SignupComponent,
-    LoginComponent
+
+  
+
   ],
   imports: [
+    MatTooltipModule,
     BrowserAnimationsModule,
-    ClarityModule,
     FormsModule,
     MaterialModule,
     BrowserModule,

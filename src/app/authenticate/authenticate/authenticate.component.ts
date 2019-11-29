@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { HomeService } from 'src/app/home/home.service';
 import { first } from 'rxjs/operators';
 import { DataService } from 'src/app/routine/dataservice.service';
-import { AlertService } from 'src/app/_services/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -21,20 +20,20 @@ export class AuthenticateComponent implements OnInit {
   loading = false
   issubmitted = false
   showbutton = false;
+  button = "LOG IN"
 
   constructor(public homeservice: HomeService,
-    public fb: FormBuilder, public router: Router, public dataService: DataService) { }
-
-
-
-  ngOnInit() {
+    public fb: FormBuilder, public router: Router, public dataService: DataService) {
     this.form = this.fb.group({
 
       'userName': ['', [Validators.required]],
       'password': ['', [Validators.required]]
     })
+  }
 
-  };
+
+
+  ngOnInit() { }
   get f() {
     return this.form.controls;
   }
@@ -56,25 +55,34 @@ export class AuthenticateComponent implements OnInit {
       this.error = `Data Server Error`
     }
   }
-  onSubmit() {
+  response() {
+    this.issubmitted = true
+    this.showbutton = true
+    this.dataService.sendMessage(this.showbutton)
+    alert(`Authentication Successful`)
+    this.router.navigate(["/routine"]);
+  }
+  noresponse(error) {
+    console.log(error.error.status);
+    this.error = error.error.status
+    this.printError(this.error)
+    this.button = "LOG IN"
+    this.loading = false;
+
+  } onSubmit() {
     this.submitted = true
     console.log(this.form.value);
     if (this.form.invalid) {
       return;
     }
+
     this.loading = true;
-    this.homeservice.authenticate(this.form.value).pipe(first()).subscribe(
+    this.button = "Logging "
+    this.homeservice.authenticate(this.form.value).subscribe(
       res => {
-        this.issubmitted = true
-        this.showbutton = true
-        this.dataService.sendMessage(this.showbutton)
-        alert(`Authentication Successful`)
-        this.router.navigate(["/routine"]);
+        this.response()
       }, (error: HttpErrorResponse) => {
-        console.log(error.error.status);
-        this.error = error.error.status
-        this.printError(this.error)
-        this.loading = false;
+        this.noresponse(error)
       }
     );
   }

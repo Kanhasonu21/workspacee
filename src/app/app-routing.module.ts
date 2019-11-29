@@ -34,7 +34,7 @@ const routes: Routes = [
 {
   path:'upload',
   component:UploaddownloadfileComponent,
-  // canActivate: [AuthGuard] 
+  canActivate: [AuthGuard] 
 },
 {
   path:'signup',

@@ -1,43 +1,70 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { HomeService } from 'src/app/home/home.service';
 import { saveAs } from 'file-saver';
-import{AuthGuard} from 'src/auth/auth.guard'
+import { AuthGuard } from 'src/auth/auth.guard'
 @Component({
   selector: 'app-uploaddownloadfile',
   templateUrl: './uploaddownloadfile.component.html',
   styleUrls: ['./uploaddownloadfile.component.css']
 })
 export class UploaddownloadfileComponent implements OnInit {
+
+  @ViewChild('labelImport', { static: true })
+  labelImport: ElementRef;
+  button = 'Download Timesheet'
+  uploadButton="Upload File";
+  uploadLoading=false
   attachmentList: any = [];
   fileToUpload: File = null;
   fileUrl;
-  button='Download Timesheet'
-  isSubmitted=false
-  loading=false
- 
+  isSubmitted = false
+  loading = false
+  downloadfile = false;
 
-  constructor(public homeService: HomeService, private authService:AuthGuard ) { }
+
+  constructor(public homeService: HomeService, private authService: AuthGuard) { }
 
   ngOnInit() {
   }
   handleFileInput(files: FileList) {
+    this.labelImport.nativeElement.innerText = Array.from(files)
+      .map(f => f.name)
+      .join(', ');
     this.fileToUpload = files.item(0);
+
   }
 
   uploadFileToActivity() {
-    this.homeService.postFile(this.fileToUpload).subscribe(data => {
-      this.attachmentList.push(data);
-      this.isSubmitted=true;
-      alert(`data submitted !`)
-    }, error => {
-      alert(`Data not submitted`)
-      console.log(error);
-    });
+    if (this.fileToUpload == null) {
+      alert(`Please upload a file first`)
+    } else {
+      this.uploadLoading=true;
+      this.uploadButton="Uploading";
+      this.homeService.postFile(this.fileToUpload).subscribe(data => {
+        this.attachmentList.push(data);
+        this.isSubmitted = true;
+        this.uploadLoading=false;
+        this.uploadButton="Upload File";
+        alert(`data submitted !`)
+        this.fileToUpload = null;
+        this.labelImport.nativeElement.innerText = 'Choose a File'
+      }, error => {
+        setTimeout(() => {
+          this.uploadLoading=false;
+          this.uploadButton="Upload File";
+          alert(`Data not Uploaded `)
+      
+
+        }, 5000);
+  
+      });
+    }
   }
   data: any[]
   //download uploaded file
   download() {
     var filename = this.attachmentList[0].fileName;
+
     this.homeService.downloadFile(filename)
       .subscribe(
         data => saveAs(data, filename),
@@ -45,25 +72,31 @@ export class UploaddownloadfileComponent implements OnInit {
       )
 
   }
-   //downloading timesheet excel
-   downloadExcel() {
+  //downloading timesheet excel
+  downloadExcel() {
 
 
-    this.loading=true
+    this.loading = true
     this.button = 'Downloading';
     this.homeService.downloadExcelFile().subscribe(res => {
+      console.log(res)
       saveAs(res, 'Timesheet.xlsx',
         { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
-        this.button = 'Download';
-       
-       
-    },error=>{
+      this.loading = false;
+      this.button = 'Download Timesheet';
+
+
+    }, error => {
       setTimeout(() => {
         alert(`Server is not responding`)
-        this.loading=false
-      }, 10000);
+        this.loading = false
+        this.button = 'Download Timesheet';
+      }, 5000);
+
+
 
     }
+
     )
   }
 }

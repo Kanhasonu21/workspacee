@@ -1,21 +1,33 @@
-<div>
-    <div class="form-group">
-        <label for="file">Choose File</label>
-        <input type="file" id="file" (change)="handleFileInput($event.target.files)">
-    </div>
-    <br>
-    <div>
-        <button mat-raised-button color="warn" (click)="uploadFileToActivity()">Submit file</button>
-    </div>
-    <div> <br>
-        <input type="button" (click)="download()" *ngIf='isSubmitted' value="Download " />
-    </div>
+<div class="box-main">
+    <div class='container'>
+        <div>
+            <p class="h4 mb-4" style="color:#17a2b8!important;text-align: center;">File Upload</p>
+            <div class="input-group">
 
-    <div>
-        <br>
-        <button class="btn btn-primary" [disabled]="loading" (click)="downloadExcel()"><i class="fa"
-                [ngClass]="{'fa-spin fa-spinner': loading, 'fa-download': !loading}">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file"
+                        (change)="handleFileInput($event.target.files)">
+                    <label class="custom-file-label" #labelImport for="file">Choose a File</label>
+                </div>
+            </div>
 
-            </i> {{button}}</button>
+            <br>
+            <div>
+                <button class="btn btn2" (click)="uploadFileToActivity()"><i class="fa"
+                        [ngClass]="{'fa-spin fa-spinner': uploadLoading}">
+
+                    </i>{{uploadButton}}</button>
+            </div><br>
+
+            <button class="btn btn2" (click)="download()" *ngIf='isSubmitted'> Download File</button>
+
+            <div>
+                <br>
+                <button class="btn btn2" [disabled]="loading" (click)="downloadExcel()"><i class="fa"
+                        [ngClass]="{'fa-spin fa-spinner': loading, 'fa-download': !loading}">
+
+                    </i> {{button}}</button>
+            </div>
+        </div>
     </div>
 </div>

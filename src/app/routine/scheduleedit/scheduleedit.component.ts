@@ -40,7 +40,7 @@ export class ScheduleeditComponent implements OnInit {
   onClear() {
 
     this.service.form.reset();
-    this.service.initializeFormGroup();
+  
   }
 
   onSubmit() {

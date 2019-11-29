@@ -88,10 +88,7 @@ export class RoutineComponent implements OnInit {
       escapeToClose	:true
     };
   }
-  logout() {
-    this._HomeService.logout();
-    this.router.navigate(["/auth"]);
-  }
+ 
   onCreate() {
     this.scheduelService.initializeFormGroup();
     const dialogConfig = new MatDialogConfig();
@@ -152,6 +149,9 @@ export class RoutineComponent implements OnInit {
     dialogConfig.width = "60%";
     this.dialog.open(DeletedialogComponent, dialogConfig).afterClosed().subscribe(() => {
       this.getdatabypage(this.pagenumber)
+      error=>{
+        alert(`Failed to delete data`)
+      }
     })
   }
   products = {
